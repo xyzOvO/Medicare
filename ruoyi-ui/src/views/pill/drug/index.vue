@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item label="生产厂家" prop="factoryId">
         <el-input
-          v-model="queryParams.factoryId"
+          v-model="queryParams['pillFactory.factoryName']"
           placeholder="请输入生产厂家"
           clearable
           @keyup.enter.native="handleQuery"
@@ -91,10 +91,11 @@
 
     <el-table v-loading="loading" :data="drugList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="药品ID" align="center" prop="drugId" />
-      <el-table-column label="药品名称" align="center" prop="drugName" />
+      <el-table-column label="药品ID" align="center" prop="drugId" width="80"/>
+      <el-table-column label="药品名称" align="center" prop="drugName" width="150"/>
       <el-table-column label="药品编码" align="center" prop="drugCode" />
-      <el-table-column label="生产厂家" align="center" prop="factoryId" />
+      <el-table-column label="厂家名称" align="center" prop="pillFactory.factoryName" min-width="200"/>
+      <el-table-column label="厂家编码" align="center" prop="pillFactory.factoryCode" />
       <el-table-column label="药品类型" align="center" prop="drugType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.pill_drug_dt" :value="scope.row.drugType"/>
@@ -130,7 +131,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -230,6 +231,7 @@ export default {
         pageSize: 10,
         drugName: null,
         factoryId: null,
+        'pillFactory.factoryName':null,
         drugType: null,
         prescriptionType: null,
         status: null,
