@@ -150,7 +150,14 @@
           <el-input v-model="form.drugCode" placeholder="请输入药品编码" />
         </el-form-item>
         <el-form-item label="生产厂家" prop="factoryId">
-          <el-input v-model="form.factoryId" placeholder="请输入生产厂家" />
+          <el-select v-model="form.factoryId" placeholder="请选择生产厂家">
+            <el-option
+              v-for="item in factoryList"
+              :key="item.factoryId"
+              :label="item.factoryName"
+              :value="item.factoryId"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="药品类型" prop="drugType">
           <el-select v-model="form.drugType" placeholder="请选择药品类型">
@@ -201,6 +208,7 @@
 
 <script>
 import { listDrug, getDrug, delDrug, addDrug, updateDrug } from "@/api/pill/drug";
+import { listFactory } from '@/api/pill/factory'
 
 export default {
   name: "Drug",
@@ -221,6 +229,8 @@ export default {
       total: 0,
       // 药品信息表格数据
       drugList: [],
+      // 生产厂家
+      factoryList:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -248,6 +258,7 @@ export default {
   },
   created() {
     this.getList();
+    this.getfactoryList();
   },
   methods: {
     /** 查询药品信息列表 */
@@ -257,6 +268,15 @@ export default {
         this.drugList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+    },
+    /** 查询生产厂家信息列表 */
+    getfactoryList() {
+      listFactory().then(response => {
+        this.factoryList = response.rows;
+        // 无分页
+        // this.total = response.total;
+        // this.loading = false;
       });
     },
     // 取消按钮

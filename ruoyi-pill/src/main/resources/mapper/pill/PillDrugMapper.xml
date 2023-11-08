@@ -36,7 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="factoryId != null "> and pd.factory_id = #{factoryId}</if>
             <if test="pillFactory != null and pillFactory.factoryName !=null and pillFactory.factoryName !=''">
              and pf.factory_name like concat('%', #{pillFactory.factoryName},'%')</if>
-            <if test="drugType != null  and drugType != ''"> and pd.drug_type = #{pillFactory.factoryName}</if>
+            <if test="drugType != null  and drugType != ''"> and pd.drug_type = #{drugType}</if>
+<!--            <if test="drugType != null  and drugType != ''"> and pd.drug_type like concat('%',#{drugType},'%')</if>-->
             <if test="prescriptionType != null  and prescriptionType != ''"> and pd.prescription_type = #{prescriptionType}</if>
             <if test="status != null  and status != ''"> and pd.status = #{status}</if>
         </where>
